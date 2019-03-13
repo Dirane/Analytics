@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="AdventureWorks">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=DESKTOP-KSVNUJG\CB2016SQLSERVER;Initial Catalog=AdventureWorks2016</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+      <rd:SecurityType>Integrated</rd:SecurityType>
+      <rd:DataSourceID>298e7154-5612-4ccf-91c0-ae1f8c627da0</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="Territory">
+      <Query>
+        <DataSourceName>AdventureWorks</DataSourceName>
+        <CommandText>SELECT		sh.OrderDate, TotalDue, st.Name AS TerritoryName,
+			st.[Group] AS TerritoryGroup
+FROM		[AdventureWorks2016].[Sales].[SalesOrderHeader] sh
+LEFT OUTER JOIN [AdventureWorks2016].[Sales].[SalesTerritory] st
+ON			sh.TerritoryID = st.TerritoryID</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="OrderDate">
+          <DataField>OrderDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TotalDue">
+          <DataField>TotalDue</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TerritoryName">
+          <DataField>TerritoryName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TerritoryGroup">
+          <DataField>TerritoryGroup</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="EngineeringDept">
+      <Query>
+        <DataSourceName>AdventureWorks</DataSourceName>
+        <CommandText>SELECT he.BusinessEntityID Employee,
+		em.Rate Wages,
+		eh.startdate startdate,
+		hd.[Name] Dept
+	FROM [HumanResources].[Employee] he
+	INNER JOIN [HumanResources].[EmployeePayHistory] em
+	ON he.BusinessEntityID = em.BusinessEntityID
+	INNER JOIN [HumanResources].[EmployeeDepartmentHistory] eh
+	ON he.BusinessEntityID = eh.BusinessEntityID
+	INNER JOIN [HumanResources].[Department] hd
+	ON eh.DepartmentID = hd.DepartmentID 
+	AND hd.[Name] = 'Engineering'</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Employee">
+          <DataField>Employee</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Wages">
+          <DataField>Wages</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="startdate">
+          <DataField>startdate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Dept">
+          <DataField>Dept</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Rectangle Name="Rectangle1">
+            <ReportItems>
+              <Textbox Name="Employee">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Sum(Fields!Employee.Value, "EngineeringDept")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>Employee</rd:DefaultName>
+                <Top>0.17708in</Top>
+                <Left>0.09375in</Left>
+                <Height>0.25in</Height>
+                <Width>1in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="Wages">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=Sum(Fields!Wages.Value, "EngineeringDept")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>Wages</rd:DefaultName>
+                <Top>0.67708in</Top>
+                <Left>0.09375in</Left>
+                <Height>0.25in</Height>
+                <Width>1in</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="startdate">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!startdate.Value, "EngineeringDept")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>startdate</rd:DefaultName>
+                <Top>0.17708in</Top>
+                <Left>1.46875in</Left>
+                <Height>0.25in</Height>
+                <Width>1in</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="TerritoryGroup">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!TerritoryGroup.Value, "Territory")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>TerritoryGroup</rd:DefaultName>
+                <Top>0.67708in</Top>
+                <Left>1.46875in</Left>
+                <Height>0.25in</Height>
+                <Width>1in</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+              <Textbox Name="TerritoryName">
+                <CanGrow>true</CanGrow>
+                <KeepTogether>true</KeepTogether>
+                <Paragraphs>
+                  <Paragraph>
+                    <TextRuns>
+                      <TextRun>
+                        <Value>=First(Fields!TerritoryName.Value, "Territory")</Value>
+                        <Style />
+                      </TextRun>
+                    </TextRuns>
+                    <Style />
+                  </Paragraph>
+                </Paragraphs>
+                <rd:DefaultName>TerritoryName</rd:DefaultName>
+                <Top>0.13542in</Top>
+                <Left>2.58333in</Left>
+                <Height>0.29167in</Height>
+                <Width>1.14583in</Width>
+                <ZIndex>4</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+              </Textbox>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+            <Top>0.36333in</Top>
+            <Left>0.39458in</Left>
+            <Height>0.92708in</Height>
+            <Width>3.72917in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+        </ReportItems>
+        <Height>3.31375in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>34ba89ce-4d1d-48ee-8c9e-9a40ba5f9b50</rd:ReportID>
+</Report>

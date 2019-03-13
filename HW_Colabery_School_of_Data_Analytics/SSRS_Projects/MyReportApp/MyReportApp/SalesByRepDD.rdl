@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="LocalAdv">
+      <DataSourceReference>LocalAdventureworks</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>48e7f099-301b-4388-bacb-5372ba7e0d1e</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="Sales">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@Year">
+            <Value>=Parameters!Year.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@TGroup">
+            <Value>=Parameters!TGroup.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@TName">
+            <Value>=Parameters!TName.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@SalesRep">
+            <Value>=Parameters!SalesRep.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@JobTitle">
+            <Value>=Parameters!JobTitle.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ShipState">
+            <Value>=Parameters!ShipState.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        YEAR(a.OrderDate) AS OrderYear, MONTH(a.OrderDate) AS OrderMonth, a.TotalDue, b.[Group] AS TerritoryGroup, b.Name AS Territory, d.Name AS StateName, ISNULL(e.FirstName + ' ' + e.LastName, 'No Rep') AS SalesRep, 
+                         ISNULL(e.JobTitle, 'None') AS JobTitle
+FROM            Sales.SalesOrderHeader AS a LEFT OUTER JOIN
+                         Sales.SalesTerritory AS b ON a.TerritoryID = b.TerritoryID LEFT OUTER JOIN
+                         Person.Address AS c ON a.ShipToAddressID = c.AddressID LEFT OUTER JOIN
+                         Person.StateProvince AS d ON c.StateProvinceID = d.StateProvinceID LEFT OUTER JOIN
+                         Sales.vSalesPerson AS e ON a.SalesPersonID = e.BusinessEntityID
+WHERE        (YEAR(a.OrderDate) IN (@Year)) AND (b.[Group] IN (@TGroup)) AND (b.Name IN (@TName)) AND (ISNULL(e.FirstName + ' ' + e.LastName, N'No Rep') IN (@SalesRep)) AND (ISNULL(e.JobTitle, N'None') IN (@JobTitle))
+AND          d.Name IN (@ShipState)</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="OrderYear">
+          <DataField>OrderYear</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="OrderMonth">
+          <DataField>OrderMonth</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalDue">
+          <DataField>TotalDue</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TerritoryGroup">
+          <DataField>TerritoryGroup</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Territory">
+          <DataField>Territory</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StateName">
+          <DataField>StateName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SalesRep">
+          <DataField>SalesRep</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JobTitle">
+          <DataField>JobTitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Year_par">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT DISTINCT YEAR(OrderDate) AS OrderYear
+FROM            Sales.SalesOrderHeader
+ORDER BY OrderYear DESC</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="OrderYear">
+          <DataField>OrderYear</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="TGroup">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT DISTINCT [Group] AS TGroup
+FROM            Sales.SalesTerritory</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="TGroup">
+          <DataField>TGroup</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="TName_par">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT DISTINCT Name AS TName
+FROM            Sales.SalesTerritory</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="TName">
+          <DataField>TName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="SalesRep_par">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT DISTINCT ISNULL(FirstName + ' ' + LastName, 'No Rep') SalesRep
+FROM  [Sales].[SalesOrderHeader] a
+LEFT JOIN [Sales].[vSalesPerson] b
+ON   a.SalesPersonID = b.BusinessEntityID</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="SalesRep">
+          <DataField>SalesRep</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="JopTitle_par">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT DISTINCT ISNULL(JobTitle,'None') AS JobTitle
+FROM            Sales.SalesOrderHeader AS a LEFT OUTER JOIN
+                         Sales.vSalesPerson AS b ON a.SalesPersonID = b.BusinessEntityID</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="JobTitle">
+          <DataField>JobTitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="ShipState_par">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT	DISTINCT Name ShipState
+FROM	[Person].[StateProvince]</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ShipState">
+          <DataField>ShipState</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Textbox Name="Textbox1">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Sales By RepDD</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox1</rd:DefaultName>
+            <Top>0.03in</Top>
+            <Left>0.58208in</Left>
+            <Height>0.25in</Height>
+            <Width>1.8125in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Line Name="Line1">
+            <Top>0.26389in</Top>
+            <Left>0.56125in</Left>
+            <Height>0in</Height>
+            <Width>1.26042in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>3pt</Width>
+              </Border>
+            </Style>
+          </Line>
+          <Line Name="Line2">
+            <Top>0.32167in</Top>
+            <Left>0.58208in</Left>
+            <Height>0in</Height>
+            <Width>2.97917in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Color>Orange</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Tablix Name="Tablix1">
+            <TablixCorner>
+              <TablixCornerRows>
+                <TablixCornerRow>
+                  <TablixCornerCell>
+                    <CellContents>
+                      <Textbox Name="Textbox5">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>Territory Group</Value>
+                                <Style>
+                                  <Color>White</Color>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox5</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <BackgroundColor>Brown</BackgroundColor>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixCornerCell>
+                  <TablixCornerCell>
+                    <CellContents>
+                      <Textbox Name="Textbox6">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>Territory</Value>
+                                <Style>
+                                  <FontFamily>Arial</FontFamily>
+                                  <Color>White</Color>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox6</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <BackgroundColor>Brown</BackgroundColor>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixCornerCell>
+                  <TablixCornerCell>
+                    <CellContents>
+                      <Textbox Name="Textbox8">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>State Name</Value>
+                                <Style>
+                                  <FontFamily>Arial</FontFamily>
+                                  <Color>White</Color>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox8</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <BackgroundColor>Brown</BackgroundColor>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixCornerCell>
+                </TablixCornerRow>
+              </TablixCornerRows>
+            </TablixCorner>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TotalDue">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Sum(Fields!TotalDue.Value)</Value>
+                                  <Style>
+                                    <Format>'$'#,0;('$'#,0)</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>TotalDue</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>=Switch(	sum(Fields!TotalDue.Value) &gt; 75000,"Green",
+			sum(Fields!TotalDue.Value) = 75000,"Yellow",
+			sum(Fields!TotalDue.Value) &lt;75000 and sum(Fields!TotalDue.Value) &gt; 0, "Red",
+			sum(Fields!TotalDue.Value) = 0, "LightGrey")</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="OrderYear">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!OrderYear.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!OrderYear.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>0.25in</Size>
+                    <CellContents>
+                      <Textbox Name="Textbox3">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Fields!OrderYear.Value</Value>
+                                <Style>
+                                  <Color>White</Color>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>Textbox3</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <BackgroundColor>Brown</BackgroundColor>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                </TablixMember>
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="TerritoryGroup">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!TerritoryGroup.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!TerritoryGroup.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>1in</Size>
+                    <CellContents>
+                      <Textbox Name="TerritoryGroup">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Fields!TerritoryGroup.Value</Value>
+                                <Style />
+                              </TextRun>
+                            </TextRuns>
+                            <Style />
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>TerritoryGroup</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <TablixMembers>
+                    <TablixMember>
+                      <Group Name="Territory">
+                        <GroupExpressions>
+                          <GroupExpression>=Fields!Territory.Value</GroupExpression>
+                        </GroupExpressions>
+                      </Group>
+                      <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!Territory.Value</Value>
+                        </SortExpression>
+                      </SortExpressions>
+                      <TablixHeader>
+                        <Size>1in</Size>
+                        <CellContents>
+                          <Textbox Name="Territory">
+                            <CanGrow>true</CanGrow>
+                            <KeepTogether>true</KeepTogether>
+                            <Paragraphs>
+                              <Paragraph>
+                                <TextRuns>
+                                  <TextRun>
+                                    <Value>=Fields!Territory.Value</Value>
+                                    <Style>
+                                      <FontFamily>Arial</FontFamily>
+                                    </Style>
+                                  </TextRun>
+                                </TextRuns>
+                                <Style />
+                              </Paragraph>
+                            </Paragraphs>
+                            <rd:DefaultName>Territory</rd:DefaultName>
+                            <Style>
+                              <Border>
+                                <Color>LightGrey</Color>
+                                <Style>Solid</Style>
+                              </Border>
+                              <PaddingLeft>2pt</PaddingLeft>
+                              <PaddingRight>2pt</PaddingRight>
+                              <PaddingTop>2pt</PaddingTop>
+                              <PaddingBottom>2pt</PaddingBottom>
+                            </Style>
+                          </Textbox>
+                        </CellContents>
+                      </TablixHeader>
+                      <TablixMembers>
+                        <TablixMember>
+                          <Group Name="StateName">
+                            <GroupExpressions>
+                              <GroupExpression>=Fields!StateName.Value</GroupExpression>
+                            </GroupExpressions>
+                          </Group>
+                          <SortExpressions>
+                            <SortExpression>
+                              <Value>=Fields!StateName.Value</Value>
+                            </SortExpression>
+                          </SortExpressions>
+                          <TablixHeader>
+                            <Size>1in</Size>
+                            <CellContents>
+                              <Textbox Name="StateName">
+                                <CanGrow>true</CanGrow>
+                                <KeepTogether>true</KeepTogether>
+                                <Paragraphs>
+                                  <Paragraph>
+                                    <TextRuns>
+                                      <TextRun>
+                                        <Value>=Fields!StateName.Value</Value>
+                                        <Style>
+                                          <FontFamily>Arial</FontFamily>
+                                        </Style>
+                                      </TextRun>
+                                    </TextRuns>
+                                    <Style />
+                                  </Paragraph>
+                                </Paragraphs>
+                                <rd:DefaultName>StateName</rd:DefaultName>
+                                <Style>
+                                  <Border>
+                                    <Color>LightGrey</Color>
+                                    <Style>Solid</Style>
+                                  </Border>
+                                  <PaddingLeft>2pt</PaddingLeft>
+                                  <PaddingRight>2pt</PaddingRight>
+                                  <PaddingTop>2pt</PaddingTop>
+                                  <PaddingBottom>2pt</PaddingBottom>
+                                </Style>
+                              </Textbox>
+                            </CellContents>
+                          </TablixHeader>
+                          <Visibility>
+                            <ToggleItem>Territory</ToggleItem>
+                          </Visibility>
+                        </TablixMember>
+                      </TablixMembers>
+                      <Visibility>
+                        <ToggleItem>TerritoryGroup</ToggleItem>
+                      </Visibility>
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>Sales</DataSetName>
+            <Top>0.98896in</Top>
+            <Left>0.56125in</Left>
+            <Height>0.5in</Height>
+            <Width>4in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Textbox Name="Textbox10">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Sales Rep</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox10</rd:DefaultName>
+            <Top>0.70771in</Top>
+            <Left>0.56125in</Left>
+            <Height>0.25in</Height>
+            <Width>1in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox11">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!SalesRep.Value, "Sales")</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox10</rd:DefaultName>
+            <Top>0.70771in</Top>
+            <Left>1.57514in</Left>
+            <Height>0.25in</Height>
+            <Width>1in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+        </ReportItems>
+        <Height>2.53in</Height>
+        <Style />
+      </Body>
+      <Width>6.94667in</Width>
+      <Page>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="Year">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>Year_par</DataSetName>
+          <ValueField>OrderYear</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Year</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>Year_par</DataSetName>
+          <ValueField>OrderYear</ValueField>
+          <LabelField>OrderYear</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="TGroup">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>TGroup</DataSetName>
+          <ValueField>TGroup</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>TGroup</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>TGroup</DataSetName>
+          <ValueField>TGroup</ValueField>
+          <LabelField>TGroup</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="TName">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>TName_par</DataSetName>
+          <ValueField>TName</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>TName</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>TName_par</DataSetName>
+          <ValueField>TName</ValueField>
+          <LabelField>TName</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="SalesRep">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>SalesRep_par</DataSetName>
+          <ValueField>SalesRep</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Sales Rep</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>SalesRep_par</DataSetName>
+          <ValueField>SalesRep</ValueField>
+          <LabelField>SalesRep</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="JobTitle">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>JopTitle_par</DataSetName>
+          <ValueField>JobTitle</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Job Title</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>JopTitle_par</DataSetName>
+          <ValueField>JobTitle</ValueField>
+          <LabelField>JobTitle</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="ShipState">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>ShipState_par</DataSetName>
+          <ValueField>ShipState</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Ship State</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>ShipState_par</DataSetName>
+          <ValueField>ShipState</ValueField>
+          <LabelField>ShipState</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Year</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>TGroup</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>TName</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>SalesRep</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>JobTitle</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>ShipState</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>bafe790e-94d4-4df5-a552-972d1fd54763</rd:ReportID>
+</Report>

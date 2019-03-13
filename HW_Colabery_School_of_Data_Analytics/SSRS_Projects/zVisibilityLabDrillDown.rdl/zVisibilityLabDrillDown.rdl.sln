@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "zVisibilityLabDrillDown.rdl", "zVisibilityLabDrillDown.rdl\zVisibilityLabDrillDown.rdl.rptproj", "{4C2AB3AE-19D3-4644-BF09-C728C4F7170D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C2AB3AE-19D3-4644-BF09-C728C4F7170D}.Debug|Default.ActiveCfg = Debug
+		{4C2AB3AE-19D3-4644-BF09-C728C4F7170D}.Debug|Default.Build.0 = Debug
+		{4C2AB3AE-19D3-4644-BF09-C728C4F7170D}.Debug|Default.Deploy.0 = Debug
+		{4C2AB3AE-19D3-4644-BF09-C728C4F7170D}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{4C2AB3AE-19D3-4644-BF09-C728C4F7170D}.DebugLocal|Default.Build.0 = DebugLocal
+		{4C2AB3AE-19D3-4644-BF09-C728C4F7170D}.Release|Default.ActiveCfg = Release
+		{4C2AB3AE-19D3-4644-BF09-C728C4F7170D}.Release|Default.Build.0 = Release
+		{4C2AB3AE-19D3-4644-BF09-C728C4F7170D}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

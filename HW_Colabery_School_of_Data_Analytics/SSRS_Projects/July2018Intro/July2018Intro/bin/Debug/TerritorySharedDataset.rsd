@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>Adventureworks</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@year">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT        TerritoryID, Name, CountryRegionCode, [Group], SalesYTD, SalesLastYear, CostYTD, CostLastYear, rowguid, ModifiedDate
+FROM            Sales.SalesTerritory
+WHERE SalesLastYear = @year</CommandText>
+      <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+    </Query>
+    <Fields>
+      <Field Name="TerritoryID">
+        <DataField>TerritoryID</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="CountryRegionCode">
+        <DataField>CountryRegionCode</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Group">
+        <DataField>Group</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="SalesYTD">
+        <DataField>SalesYTD</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="SalesLastYear">
+        <DataField>SalesLastYear</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="CostYTD">
+        <DataField>CostYTD</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="CostLastYear">
+        <DataField>CostLastYear</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="rowguid">
+        <DataField>rowguid</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="ModifiedDate">
+        <DataField>ModifiedDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

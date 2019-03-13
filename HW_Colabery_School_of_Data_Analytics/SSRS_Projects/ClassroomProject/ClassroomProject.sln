@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "ClassroomProject", "ClassroomProject\ClassroomProject.rptproj", "{A0507A00-1008-4AB2-9543-0089444C1DFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0507A00-1008-4AB2-9543-0089444C1DFE}.Debug|Default.ActiveCfg = Debug
+		{A0507A00-1008-4AB2-9543-0089444C1DFE}.Debug|Default.Build.0 = Debug
+		{A0507A00-1008-4AB2-9543-0089444C1DFE}.Debug|Default.Deploy.0 = Debug
+		{A0507A00-1008-4AB2-9543-0089444C1DFE}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{A0507A00-1008-4AB2-9543-0089444C1DFE}.DebugLocal|Default.Build.0 = DebugLocal
+		{A0507A00-1008-4AB2-9543-0089444C1DFE}.Release|Default.ActiveCfg = Release
+		{A0507A00-1008-4AB2-9543-0089444C1DFE}.Release|Default.Build.0 = Release
+		{A0507A00-1008-4AB2-9543-0089444C1DFE}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

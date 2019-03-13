@@ -1,0 +1,1561 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/20/2018 1:22:55 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-KSVNUJG"
+  DTS:CreatorName="DESKTOP-KSVNUJG\Dirane"
+  DTS:DTSID="{AB89202F-C994-4EAD-9A7E-299AFD416601}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3008.28"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_Prospects"
+  DTS:PackageType="5"
+  DTS:VersionBuild="6"
+  DTS:VersionGUID="{AB7D4262-5D23-42CE-82EC-2071E26BCBCF}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{56AAE782-3C65-4B69-8667-FD5D497F10C2}"
+      DTS:ObjectName="DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=DESKTOP-KSVNUJG\CB2016SQLSERVER;Initial Catalog=Prospects;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT_Load_tbl_Prospects"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{80096BEC-7E8C-4D39-AFB4-76AB8A6D5965}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_Load_tbl_Prospects"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_tbl_dictionary_Company"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[tbl_dictionary_Company]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[tbl_dictionary_Company]) [refTable]
+where [refTable].[CompanyName] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="CompanyID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CompanyName" dataType="DT_STR" length="250" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Active" dataType="DT_STR" length="250" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="CreateDate" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="UpdateDate" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Company]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Inputs[Lookup Input].Columns[Company]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="Company"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Company]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">CompanyName</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup Match Output].Columns[CompanyID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup Match Output].Columns[CompanyID]"
+                      name="CompanyID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">CompanyID</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_Tbl_dictionary_Department"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[tbl_dictionary_Department]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[tbl_dictionary_Department]) [refTable]
+where [refTable].[Dept_Name] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DepartmentID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Dept_Name" dataType="DT_STR" length="250" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Active" dataType="DT_STR" length="250" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="CreateDate" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="UpdateDate" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Department]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Inputs[Lookup Input].Columns[Department]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="Department"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Department]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Dept_Name</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup Match Output].Columns[DepartmentID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup Match Output].Columns[DepartmentID]"
+                      name="DepartmentID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">DepartmentID</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_tbl_dictionary_Location"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[tbl_dictionary_Location]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[tbl_dictionary_Location]) [refTable]
+where [refTable].[LocationCity] = ? and [refTable].[LocationState] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="LocationID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LocationCity" dataType="DT_STR" length="250" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="LocationState" dataType="DT_STR" length="250" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Active" dataType="DT_STR" length="250" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="CreateDate" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="UpdateDate" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[City]};#{Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[State]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Inputs[Lookup Input].Columns[City]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="City"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[City]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">LocationCity</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Inputs[Lookup Input].Columns[State]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="State"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[State]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">LocationState</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup Match Output].Columns[LocationID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup Match Output].Columns[LocationID]"
+                      name="LocationID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">LocationID</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LKP_Tbl_dictionary_Title"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[tbl_dictionary_Title]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[tbl_dictionary_Title]) [refTable]
+where [refTable].[Title_Name] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="TitleID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Title_Name" dataType="DT_STR" length="250" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Active" dataType="DT_STR" length="250" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="CreateDate" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="UpdateDate" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Designation]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Inputs[Lookup Input].Columns[Designation]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="Designation"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Designation]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Title_Name</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup Match Output].Columns[TitleID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup Match Output].Columns[TitleID]"
+                      name="TitleID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">TitleID</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[tbl_Prospects]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FirstName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="FirstName"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Contact_FirstName]"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[FirstName]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LastName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="250"
+                      cachedName="LastName"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Contact_LastName]"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[LastName]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TitleID]"
+                      cachedDataType="i4"
+                      cachedName="TitleID"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Title_ID]"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup Match Output].Columns[TitleID]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DepartmentID]"
+                      cachedDataType="i4"
+                      cachedName="DepartmentID"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Dept_ID]"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup Match Output].Columns[DepartmentID]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CompanyID]"
+                      cachedDataType="i4"
+                      cachedName="CompanyID"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Company_ID]"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup Match Output].Columns[CompanyID]" />
+                    <inputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LocationID]"
+                      cachedDataType="i4"
+                      cachedName="LocationID"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Location_ID]"
+                      lineageId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup Match Output].Columns[LocationID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Contact_ID]"
+                      dataType="i4"
+                      name="Contact_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Contact_FirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="Contact_FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Contact_LastName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="Contact_LastName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Title_ID]"
+                      dataType="i4"
+                      name="Title_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Dept_ID]"
+                      dataType="i4"
+                      name="Dept_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Company_ID]"
+                      dataType="i4"
+                      name="Company_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Location_ID]"
+                      dataType="i4"
+                      name="Location_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Active]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      name="Active" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Create_Date]"
+                      dataType="dbTimeStamp"
+                      name="Create_Date" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Update_Date]"
+                      dataType="dbTimeStamp"
+                      name="Update_Date" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source_tbl_stg_Prostpects"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[tbl_stg_Prospects]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-KSVNUJG\CB2016SQLSERVER.Prospects]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Title]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Title]"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Title]"
+                      name="Title"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Company]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Company]"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Company]"
+                      name="Company"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Location]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Location]"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Location]"
+                      name="Location"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[FirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[LastName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Designation]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Designation]"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Designation]"
+                      name="Designation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Department]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Department]"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[Department]"
+                      name="Department"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[City]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[City]"
+                      name="City"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[State]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].Columns[State]"
+                      name="State"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="Title" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Company]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="Company" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="Location" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Designation]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="Designation" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[Department]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="Department" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      name="State" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Title]"
+                      name="Title" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Company]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Company]"
+                      name="Company" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Location]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Location]"
+                      name="Location" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Designation]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Designation]"
+                      name="Designation" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Department]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[Department]"
+                      name="Department" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[City]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[City]"
+                      name="City" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[State]"
+                      codePage="1252"
+                      dataType="str"
+                      length="250"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[State]"
+                      name="State" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT_Load_tbl_Prospects.Paths[Lookup Match Output]"
+              endId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Load_tbl_Prospects.Paths[Lookup Match Output1]"
+              endId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Load_tbl_Prospects.Paths[Lookup Match Output2]"
+              endId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Load_tbl_Prospects.Paths[Lookup Match Output3]"
+              endId="Package\DFT_Load_tbl_Prospects\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DFT_Load_tbl_Prospects.Paths[OLE DB Source Output]"
+              endId="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="195,42"
+          Id="Package\DFT_Load_tbl_Prospects"
+          TopLeft="197,80" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT_Load_tbl_Prospects">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="195,42"
+          Id="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title"
+          TopLeft="44,89" />
+        <NodeLayout
+          Size="230,42"
+          Id="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department"
+          TopLeft="291,90" />
+        <NodeLayout
+          Size="242,42"
+          Id="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects"
+          TopLeft="41,12" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\DFT_Load_tbl_Prospects\OLE DB Destination"
+          TopLeft="187,283" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company"
+          TopLeft="300,165" />
+        <NodeLayout
+          Size="211,42"
+          Id="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location"
+          TopLeft="30,168" />
+        <EdgeLayout
+          Id="Package\DFT_Load_tbl_Prospects.Paths[Lookup Match Output3]"
+          TopLeft="135.5,210">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="137,73"
+              Start="0,0"
+              End="137,65.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.5"
+                    Point2="0,36.5"
+                    Point3="4,36.5" />
+                  <mssgle:LineSegment
+                    End="133,36.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="133,36.5"
+                    Point2="137,36.5"
+                    Point3="137,40.5" />
+                  <mssgle:LineSegment
+                    End="137,65.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="20.30861328125,41.5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_tbl_Prospects.Paths[Lookup Match Output2]"
+          TopLeft="300,187.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-59,0"
+              Start="0,0"
+              End="-51.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-51.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-73.94138671875,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_tbl_Prospects.Paths[Lookup Match Output1]"
+          TopLeft="406.75,132">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33"
+              Start="0,0"
+              End="0,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,6.9453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_tbl_Prospects.Paths[Lookup Match Output]"
+          TopLeft="239,110.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="52,0"
+              Start="0,0"
+              End="44.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="44.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-25.94138671875,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DFT_Load_tbl_Prospects.Paths[OLE DB Source Output]"
+          TopLeft="162,54">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-20.5,35"
+              Start="0,0"
+              End="-20.5,27.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.5"
+                    Point2="0,17.5"
+                    Point3="-4,17.5" />
+                  <mssgle:LineSegment
+                    End="-16.5,17.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-16.5,17.5"
+                    Point2="-20.5,17.5"
+                    Point3="-20.5,21.5" />
+                  <mssgle:LineSegment
+                    End="-20.5,27.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Title">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[tbl_dictionary_Title]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_tbl_Prospects\LKP_Tbl_dictionary_Department">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[tbl_dictionary_Department]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_tbl_Prospects\OLE DB Source_tbl_stg_Prostpects">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_tbl_Prospects\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Company">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[tbl_dictionary_Company]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_Load_tbl_Prospects\LKP_tbl_dictionary_Location">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[tbl_dictionary_Location]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

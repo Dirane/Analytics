@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="DESKTOP-KSVNUJG_CB2016SQLSERVER.LearningSSIS"
+  DTS:DTSID="{C5970126-BED6-4B8E-B161-A2012E2DDC3B}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=DESKTOP-KSVNUJG\CB2016SQLSERVER;Initial Catalog=LearningSSIS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

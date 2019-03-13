@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="LocalAdv">
+      <DataSourceReference>LocalAdventureworks</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>48e7f099-301b-4388-bacb-5372ba7e0d1e</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="Sales">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@Year">
+            <Value>=Parameters!Year.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@TGroup">
+            <Value>=Parameters!TGroup.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@TName">
+            <Value>=Parameters!TName.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@SalesRep">
+            <Value>=Parameters!SalesRep.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@JobTitle">
+            <Value>=Parameters!JobTitle.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ShipState">
+            <Value>=Parameters!ShipState.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        YEAR(a.OrderDate) AS OrderYear, MONTH(a.OrderDate) AS OrderMonth, a.TotalDue, b.[Group] AS TerritoryGroup, b.Name AS Territory, d.Name AS StateName, ISNULL(e.FirstName + ' ' + e.LastName, 'No Rep') AS SalesRep, 
+                         ISNULL(e.JobTitle, 'None') AS JobTitle
+FROM            Sales.SalesOrderHeader AS a LEFT OUTER JOIN
+                         Sales.SalesTerritory AS b ON a.TerritoryID = b.TerritoryID LEFT OUTER JOIN
+                         Person.Address AS c ON a.ShipToAddressID = c.AddressID LEFT OUTER JOIN
+                         Person.StateProvince AS d ON c.StateProvinceID = d.StateProvinceID LEFT OUTER JOIN
+                         Sales.vSalesPerson AS e ON a.SalesPersonID = e.BusinessEntityID
+WHERE        (YEAR(a.OrderDate) IN (@Year)) AND (b.[Group] IN (@TGroup)) AND (b.Name IN (@TName)) AND (ISNULL(e.FirstName + ' ' + e.LastName, N'No Rep') IN (@SalesRep)) AND (ISNULL(e.JobTitle, N'None') IN (@JobTitle))
+AND          d.Name IN (@ShipState)</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="OrderYear">
+          <DataField>OrderYear</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="OrderMonth">
+          <DataField>OrderMonth</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalDue">
+          <DataField>TotalDue</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TerritoryGroup">
+          <DataField>TerritoryGroup</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Territory">
+          <DataField>Territory</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StateName">
+          <DataField>StateName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SalesRep">
+          <DataField>SalesRep</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JobTitle">
+          <DataField>JobTitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Year_par">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT DISTINCT YEAR(OrderDate) AS OrderYear
+FROM            Sales.SalesOrderHeader
+ORDER BY OrderYear DESC</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="OrderYear">
+          <DataField>OrderYear</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="TGroup">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT DISTINCT [Group] AS TGroup
+FROM            Sales.SalesTerritory</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="TGroup">
+          <DataField>TGroup</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="TName_par">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT DISTINCT Name AS TName
+FROM            Sales.SalesTerritory</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="TName">
+          <DataField>TName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="SalesRep_par">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT DISTINCT ISNULL(FirstName + ' ' + LastName, 'No Rep') SalesRep
+FROM  [Sales].[SalesOrderHeader] a
+LEFT JOIN [Sales].[vSalesPerson] b
+ON   a.SalesPersonID = b.BusinessEntityID</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="SalesRep">
+          <DataField>SalesRep</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="JopTitle_par">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT DISTINCT ISNULL(JobTitle,'None') AS JobTitle
+FROM            Sales.SalesOrderHeader AS a LEFT OUTER JOIN
+                         Sales.vSalesPerson AS b ON a.SalesPersonID = b.BusinessEntityID</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="JobTitle">
+          <DataField>JobTitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="ShipState_par">
+      <Query>
+        <DataSourceName>LocalAdv</DataSourceName>
+        <CommandText>SELECT	DISTINCT Name ShipState
+FROM	[Person].[StateProvince]</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="ShipState">
+          <DataField>ShipState</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Textbox Name="Textbox1">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Sales By Month All</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox1</rd:DefaultName>
+            <Top>0.03in</Top>
+            <Left>0.58208in</Left>
+            <Height>0.25in</Height>
+            <Width>1.8125in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Line Name="Line1">
+            <Top>0.26389in</Top>
+            <Left>0.56125in</Left>
+            <Height>0in</Height>
+            <Width>1.26042in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Color>Brown</Color>
+                <Style>Solid</Style>
+                <Width>3pt</Width>
+              </Border>
+            </Style>
+          </Line>
+          <Line Name="Line2">
+            <Top>0.32167in</Top>
+            <Left>0.58208in</Left>
+            <Height>0in</Height>
+            <Width>2.97917in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Color>Orange</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Chart Name="Chart1">
+            <ChartCategoryHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Group Name="Chart1_CategoryGroup">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!OrderYear.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!OrderYear.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <ChartMembers>
+                    <ChartMember>
+                      <Group Name="Chart1_CategoryGroup1">
+                        <GroupExpressions>
+                          <GroupExpression>=Fields!OrderMonth.Value</GroupExpression>
+                        </GroupExpressions>
+                      </Group>
+                      <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!OrderMonth.Value</Value>
+                        </SortExpression>
+                      </SortExpressions>
+                      <Label>=Fields!OrderMonth.Value</Label>
+                    </ChartMember>
+                  </ChartMembers>
+                  <Label>=Fields!OrderYear.Value</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartCategoryHierarchy>
+            <ChartSeriesHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Label>Total Due</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartSeriesHierarchy>
+            <ChartData>
+              <ChartSeriesCollection>
+                <ChartSeries Name="TotalDue">
+                  <ChartDataPoints>
+                    <ChartDataPoint>
+                      <ChartDataPointValues>
+                        <Y>=Sum(Fields!TotalDue.Value)</Y>
+                      </ChartDataPointValues>
+                      <ChartDataLabel>
+                        <Style />
+                      </ChartDataLabel>
+                      <Style />
+                      <ChartMarker>
+                        <Type>Auto</Type>
+                        <Style />
+                      </ChartMarker>
+                      <DataElementOutput>Output</DataElementOutput>
+                    </ChartDataPoint>
+                  </ChartDataPoints>
+                  <Type>Line</Type>
+                  <Style />
+                  <ChartEmptyPoints>
+                    <Style />
+                    <ChartMarker>
+                      <Style />
+                    </ChartMarker>
+                    <ChartDataLabel>
+                      <Style />
+                    </ChartDataLabel>
+                  </ChartEmptyPoints>
+                  <ValueAxisName>Primary</ValueAxisName>
+                  <CategoryAxisName>Primary</CategoryAxisName>
+                  <ChartSmartLabel>
+                    <CalloutLineColor>Black</CalloutLineColor>
+                    <MinMovingDistance>0pt</MinMovingDistance>
+                  </ChartSmartLabel>
+                </ChartSeries>
+              </ChartSeriesCollection>
+            </ChartData>
+            <ChartAreas>
+              <ChartArea Name="Default">
+                <ChartCategoryAxes>
+                  <ChartAxis Name="Primary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Enabled>False</Enabled>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Enabled>False</Enabled>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Location>Opposite</Location>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartCategoryAxes>
+                <ChartValueAxes>
+                  <ChartAxis Name="Primary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Format>'$'#,0;('$'#,0)</Format>
+                      <Color>#5c5c5c</Color>
+                      <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Location>Opposite</Location>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartValueAxes>
+                <Style>
+                  <BackgroundColor>#00ffffff</BackgroundColor>
+                  <BackgroundGradientType>None</BackgroundGradientType>
+                </Style>
+              </ChartArea>
+            </ChartAreas>
+            <Palette>EarthTones</Palette>
+            <ChartBorderSkin>
+              <Style>
+                <BackgroundColor>Gray</BackgroundColor>
+                <BackgroundGradientType>None</BackgroundGradientType>
+                <Color>White</Color>
+              </Style>
+            </ChartBorderSkin>
+            <ChartNoDataMessage Name="NoDataMessage">
+              <Caption>No Data Available</Caption>
+              <Style>
+                <BackgroundGradientType>None</BackgroundGradientType>
+                <FontWeight>Bold</FontWeight>
+                <TextAlign>General</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+            </ChartNoDataMessage>
+            <DataSetName>Sales</DataSetName>
+            <Top>0.46292in</Top>
+            <Height>2.27083in</Height>
+            <Width>3.79626in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Color>LightGrey</Color>
+                <Style>None</Style>
+              </Border>
+              <BackgroundColor>White</BackgroundColor>
+              <BackgroundGradientType>None</BackgroundGradientType>
+            </Style>
+          </Chart>
+        </ReportItems>
+        <Height>2.78583in</Height>
+        <Style />
+      </Body>
+      <Width>3.8425in</Width>
+      <Page>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="Year">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>Year_par</DataSetName>
+          <ValueField>OrderYear</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Year</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>Year_par</DataSetName>
+          <ValueField>OrderYear</ValueField>
+          <LabelField>OrderYear</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="TGroup">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>TGroup</DataSetName>
+          <ValueField>TGroup</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>TGroup</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>TGroup</DataSetName>
+          <ValueField>TGroup</ValueField>
+          <LabelField>TGroup</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="TName">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>TName_par</DataSetName>
+          <ValueField>TName</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>TName</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>TName_par</DataSetName>
+          <ValueField>TName</ValueField>
+          <LabelField>TName</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="SalesRep">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>SalesRep_par</DataSetName>
+          <ValueField>SalesRep</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Sales Rep</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>SalesRep_par</DataSetName>
+          <ValueField>SalesRep</ValueField>
+          <LabelField>SalesRep</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="JobTitle">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>JopTitle_par</DataSetName>
+          <ValueField>JobTitle</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Job Title</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>JopTitle_par</DataSetName>
+          <ValueField>JobTitle</ValueField>
+          <LabelField>JobTitle</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="ShipState">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>ShipState_par</DataSetName>
+          <ValueField>ShipState</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Ship State</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>ShipState_par</DataSetName>
+          <ValueField>ShipState</ValueField>
+          <LabelField>ShipState</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Year</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>TGroup</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>TName</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>SalesRep</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>JobTitle</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>ShipState</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>bafe790e-94d4-4df5-a552-972d1fd54763</rd:ReportID>
+</Report>
